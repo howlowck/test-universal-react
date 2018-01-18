@@ -5,7 +5,7 @@
  * absolute paths should be resolved during runtime by our build internal/server.
  */
 
-import * as EnvVars from './utils/envVars';
+import * as EnvVars from './utils/envVars'
 
 const values = {
   // The configuration values that should be exposed to our client bundle.
@@ -18,18 +18,18 @@ const values = {
     welcomeMessage: true,
     // We only need to expose the enabled flag of the service worker.
     serviceWorker: {
-      enabled: true,
+      enabled: true
     },
     // We need to expose all the polyfill.io settings.
     polyfillIO: true,
     // We need to expose all the htmlPage settings.
-    htmlPage: true,
+    htmlPage: true
   },
 
   // The host on which the server should run.
   host: EnvVars.string('HOST', '0.0.0.0'),
   // The port on which the server should run.
-  port: EnvVars.number('PORT', 1337),
+  port: process.env.PORT, // EnvVars.number('PORT', 1337),
 
   // The port on which the client bundle development server should run.
   clientDevServerPort: EnvVars.number('CLIENT_DEV_PORT', 7331),
@@ -63,8 +63,8 @@ const values = {
     features: [
       // The default list.
       'default',
-      'es6',
-    ],
+      'es6'
+    ]
   },
 
   // Basic configuration for the HTML page that hosts our application.
@@ -74,7 +74,7 @@ const values = {
     titleTemplate: 'React, Universally - %s',
     defaultTitle: 'React, Universally',
     description:
-      'A starter kit giving you the minimum requirements for a production ready universal react application.',
+      'A starter kit giving you the minimum requirements for a production ready universal react application.'
   },
 
   // Content Security Policy (CSP)
@@ -91,12 +91,12 @@ const values = {
     scriptSrc: [
       // Allow scripts from cdn.polyfill.io so that we can import the
       // polyfill.
-      'cdn.polyfill.io',
+      'cdn.polyfill.io'
     ],
     styleSrc: [
       'cdn.rawgit.com/milligram/milligram/master/dist/milligram.min.css',
-      'fonts.googleapis.com/css',
-    ],
+      'fonts.googleapis.com/css'
+    ]
   },
 
   // Path to the public assets that will be served off the root of the
@@ -127,7 +127,7 @@ const values = {
     /\.(eot|woff|woff2|ttf|otf)$/,
     /\.(svg|png|jpg|jpeg|gif|ico)$/,
     /\.(mp4|mp3|ogg|swf|webp)$/,
-    /\.(css|scss|sass|sss|less)$/,
+    /\.(css|scss|sass|sss|less)$/
   ],
 
   // Note: you can only have a single service worker instance.  Our service
@@ -149,10 +149,10 @@ const values = {
       // You may or may not want to be including these assets.  Feel free
       // to remove this or instead include only a very specific set of
       // assets.
-      './**/*',
+      './**/*'
     ],
     // Offline page file name.
-    offlinePageFileName: 'offline.html',
+    offlinePageFileName: 'offline.html'
   },
 
   bundles: {
@@ -167,7 +167,7 @@ const values = {
         // The service worker offline page generation needs access to the
         // config folder.  Don't worry we have guards within the config files
         // to ensure they never get included in a client bundle.
-        './config',
+        './config'
       ],
 
       // Where does the client bundle output live?
@@ -198,12 +198,12 @@ const values = {
           'react',
           'react-dom',
           'react-helmet',
-          'react-router-dom',
+          'react-router-dom'
         ],
 
         // The name of the vendor DLL.
-        name: '__dev_vendor_dll__',
-      },
+        name: '__dev_vendor_dll__'
+      }
     },
 
     server: {
@@ -214,8 +214,8 @@ const values = {
       srcPaths: ['./server', './shared', './config'],
 
       // Where does the server bundle output live?
-      outputPath: './build/server',
-    },
+      outputPath: './build/server'
+    }
   },
 
   additionalNodeBundles: {
@@ -259,7 +259,7 @@ const values = {
     // detail which bundle and mode is being targetted for the current function run.
     babelConfig: (babelConfig, buildOptions) => {
       // eslint-disable-next-line no-unused-vars
-      const { target, mode } = buildOptions;
+      const { target, mode } = buildOptions
 
       // Example
       /*
@@ -268,7 +268,7 @@ const values = {
       }
      */
 
-      return babelConfig;
+      return babelConfig
     },
 
     // This plugin allows you to provide final adjustments your webpack
@@ -282,7 +282,7 @@ const values = {
     // detail which bundle and mode is being targetted for the current function run.
     webpackConfig: (webpackConfig, buildOptions) => {
       // eslint-disable-next-line no-unused-vars
-      const { target, mode } = buildOptions;
+      const { target, mode } = buildOptions
 
       // Example:
       /*
@@ -298,17 +298,17 @@ const values = {
       }
       */
 
-      return webpackConfig;
-    },
-  },
-};
+      return webpackConfig
+    }
+  }
+}
 
 // This protects us from accidentally including this configuration in our
 // client bundle. That would be a big NO NO to do. :)
 if (process.env.BUILD_FLAG_IS_CLIENT === 'true') {
   throw new Error(
     "You shouldn't be importing the `<projectroot>/config/values.js` directly into code that will be included in your 'client' bundle as the configuration object will be sent to user's browsers. This could be a security risk! Instead, use the `config` helper function located at `<projectroot>/config/index.js`.",
-  );
+  )
 }
 
-export default values;
+export default values
